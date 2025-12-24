@@ -75,18 +75,14 @@ pip install -r requirements.txt
 # Lancer le serveur
 uvicorn main:app --reload
 ```
-
-2. Configuration du Frontend (Next.js)
-Bash
-
+### 2. Frontend (Next.js)
+```bash
 # Accéder au dossier frontend
 cd frontend
 
-# Installer les dépendances
+# Installer les dépendances (React, Next, Lucide, Recharts, etc.)
 npm install
 
 # Lancer le serveur de développement
 npm run dev
-
-
-© 2024 - Projet Nexus Analytics 
+```
