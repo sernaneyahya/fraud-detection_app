@@ -74,3 +74,11 @@ source venv/bin/activate # ou venv\Scripts\activate sur Windows
 pip install -r requirements.txt
 # Lancer le serveur
 uvicorn main:app --reload
+
+2. Frontend (Next.js)
+Bash
+
+cd frontend
+npm install
+npm run dev
+L'application sera disponible sur http://localhost:3000.
