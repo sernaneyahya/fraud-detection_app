@@ -76,10 +76,17 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-### Frontend (Next.js)
-```bash
+2. Configuration du Frontend (Next.js)
+Bash
 
+# Accéder au dossier frontend
 cd frontend
+
+# Installer les dépendances
 npm install
+
+# Lancer le serveur de développement
 npm run dev
-L'application sera disponible sur http://localhost:3000.
+
+
+© 2024 - Projet Nexus Analytics 
