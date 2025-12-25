@@ -48,7 +48,6 @@ Pour maximiser le **Recall** (détection des fraudes réelles), nous utilisons u
 
 L'intelligence du système repose sur la création de variables stratégiques :
 * **Distance de Haversine :** Calcul de la distance réelle entre le client et le marchand.
-* **Circular Time Encoding :** Transformation des heures en fonctions Sinus/Cosinus pour capturer la cyclicité nocturne.
 * **is_extreme_amount :** Flag binaire basé sur l'analyse statistique des montants frauduleux.
 
 ---
