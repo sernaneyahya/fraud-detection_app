@@ -1,0 +1,33 @@
+🔍 ANALYSE DES PATTERNS DE FRAUDE
+
+💰 MONTANTS :
+Moyenne transaction NORMALE : 67.65 $
+Moyenne transaction FRAUDE   : 530.66 $
+Montant MAX FRAUDE           : 1376.04 $
+
+🕒 HORAIRES :
+Top 3 des heures de fraude :
+ - Heure 22 : 2481 fraudes
+ - Heure 23 : 2442 fraudes
+ - Heure 1 : 827 fraudes
+
+🌍 DISTANCE :
+Distance moyenne NORMALE : 76.11 km
+Distance moyenne FRAUDE   : 76.26 km
+
+🔗 CORRÉLATION AVEC IS_FRAUD :
+is_fraud                  : 1.0000
+amt                       : 0.2093
+category_code             : 0.0193
+hour                      : 0.0132
+age                       : 0.0107
+gender_M                  : 0.0058
+day_of_week               : 0.0046
+lat                       : 0.0029
+merch_lat                 : 0.0028
+long                      : 0.0010
+merch_long                : 0.0010
+distance_km               : 0.0004
+city_pop                  : 0.0003
+zip                       : -0.0022
+month                     : -0.0164
