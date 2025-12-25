@@ -20,7 +20,6 @@ def train():
     print("🚀 Chargement du dataset cleané...")
     df = pd.read_csv(INPUT_FILE)
 
-    # Séparation Features / Target
     X = df.drop('is_fraud', axis=1)
     y = df['is_fraud']
 
@@ -29,23 +28,21 @@ def train():
     count_fraud = y.sum()
     count_legit = len(y) - count_fraud
     ratio = count_legit / count_fraud
-    print(f"⚖️ Ratio de déséquilibre calculé : {ratio:.2f}")
+    print(f"Ratio de déséquilibre calculé : {ratio:.2f}")
 
     # Split Stratifié (Important pour garder la même proportion de fraude)
-    print("✂️ Séparation Train / Test...")
+    print("Séparation Train / Test...")
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    # --- DÉFINITION DU STACKING ---
-    print("🏗️ Construction de l'architecture Stacking...")
+    print("Construction de l'architecture Stacking...")
 
-    # Niveau 1 : Les Modèles de Base (Experts spécialisés)
     base_learners = [
         ('rf', RandomForestClassifier(
             n_estimators=200, 
             min_samples_leaf=2,
-            class_weight='balanced', # Gère le déséquilibre
+            class_weight='balanced',
             n_jobs=-1,
             random_state=42
         )),
@@ -53,14 +50,12 @@ def train():
             n_estimators=200,
             learning_rate=0.05,
             max_depth=6,
-            scale_pos_weight=ratio, # Gère le déséquilibre
+            scale_pos_weight=ratio,
             eval_metric='logloss',
             random_state=42
         ))
     ]
 
-    # Niveau 2 : Le Méta-Modèle (Le Juge)
-    # La régression logistique va décider à qui faire confiance entre RF et XGB
     meta_model = LogisticRegression(random_state=42)
 
     model = StackingClassifier(
@@ -70,14 +65,11 @@ def train():
         n_jobs=-1
     )
 
-    # Entraînement
-    print("🧠 Entraînement du modèle Stacking...")
+    print("Entraînement du modèle Stacking...")
     model.fit(X_train, y_train)
 
-    # --- VÉRIFICATION DE L'OVERFITTING ---
-    print("🧪 Vérification de la généralisation (Train vs Test)...")
+    print("Vérification de la généralisation (Train vs Test)...")
     
-    # Calcul des probabilités pour les deux sets
     y_prob_train = model.predict_proba(X_train)[:, 1]
     y_prob_test = model.predict_proba(X_test)[:, 1]
     
@@ -86,18 +78,13 @@ def train():
     
     gap = auc_train - auc_test
     
-    # Évaluation
-    print("📝 Évaluation des performances...")
+    print("Évaluation des performances...")
     y_prob = model.predict_proba(X_test)[:, 1]
     
-    # --- Optimisation du Seuil (Threshold Tuning) ---
-    # Au lieu de prendre 0.5 par défaut, on prend un seuil plus sensible
-    # pour attraper plus de fraudes (Recall) sans trop sacrifier la précision.
     custom_threshold = 0.4
     y_pred = (y_prob >= custom_threshold).astype(int)
 
-    # Calcul de la confusion matrix
-    cm = confusion_matrix(y_test, y_pred) # [[TN, FP], [FN, TP]]
+    cm = confusion_matrix(y_test, y_pred)
 
     metrics = {
         "model_type": "Stacking (RF + XGBoost)",
@@ -113,11 +100,10 @@ def train():
     print(f"   Écart (Gap)               : {gap:.5f}")
 
     if gap > 0.05:
-        print("⚠️ ATTENTION : Risque d'overfitting détecté (écart > 5%).")
+        print("ATTENTION : Risque d'overfitting détecté (écart > 5%).")
     else:
-        print("✅ GÉNÉRALISATION : L'écart est faible, le modèle est robuste.")
+        print("GÉNÉRALISATION : L'écart est faible, le modèle est robuste.")
 
-    # On ajoute ces infos dans le dictionnaire metrics pour le rapport
     metrics["overfitting_check"] = {
         "auc_train": auc_train,
         "auc_test": auc_test,
@@ -125,7 +111,6 @@ def train():
         "is_robust": bool(gap <= 0.05)
     }
 
-    # Affichage Console
     print("\n--- RÉSULTATS ---")
     print(f"Confusion Matrix:\n{cm}")
     print(f"ROC AUC: {metrics['auc_roc']:.4f}")
@@ -133,12 +118,11 @@ def train():
     print(f"Recall (Fraud): {metrics['report']['1']['recall']:.4f}")
     print("-----------------")
 
-    # Sauvegardes
     with open(os.path.join(METRICS_DIR, "metrics.json"), "w") as f:
         json.dump(metrics, f, indent=4)
         
     joblib.dump(model, os.path.join(MODEL_DIR, "fraud_model.pkl"))
-    print("✅ Modèle Stacking sauvegardé !")
+    print("Modèle Stacking sauvegardé !")
 
 if __name__ == "__main__":
     train()

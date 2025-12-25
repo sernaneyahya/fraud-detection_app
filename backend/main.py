@@ -14,6 +14,7 @@ import requests
 app = FastAPI(title="Nexus Sentinel Analytics API", version="2.0.0")
 
 SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
+
 # Configuration CORS pour autoriser Next.js
 app.add_middleware(
     CORSMiddleware,
@@ -170,8 +171,7 @@ def get_metrics():
         }
 
 def send_slack_alert(tx_data, score):
-    
-    # Couleur : Rouge si critique, Orange si moyen
+  
     color = "#FF0000" if score > 0.8 else "#FF8800"
     
     payload = {

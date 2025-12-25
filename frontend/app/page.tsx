@@ -22,12 +22,60 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 const DEFAULT_CITIES = [
+  // 🇲🇦 Maroc
   { name: "Casablanca", lat: 33.5731, lon: -7.5898 },
+  { name: "Rabat", lat: 34.0209, lon: -6.8416 },
+  { name: "Marrakech", lat: 31.6295, lon: -7.9811 },
+  { name: "Tanger", lat: 35.7595, lon: -5.8340 },
+  { name: "Agadir", lat: 30.4278, lon: -9.5981 },
+
+  // 🇪🇺 Europe
   { name: "Paris", lat: 48.8566, lon: 2.3522 },
+  { name: "London", lat: 51.5074, lon: -0.1278 },
+  { name: "Madrid", lat: 40.4168, lon: -3.7038 },
+  { name: "Berlin", lat: 52.5200, lon: 13.4050 },
+  { name: "Rome", lat: 41.9028, lon: 12.4964 },
+  { name: "Amsterdam", lat: 52.3676, lon: 4.9041 },
+
+  // 🇺🇸 Amérique du Nord
   { name: "New York", lat: 40.7128, lon: -74.0060 },
+  { name: "Los Angeles", lat: 34.0522, lon: -118.2437 },
+  { name: "Chicago", lat: 41.8781, lon: -87.6298 },
+  { name: "Toronto", lat: 43.6532, lon: -79.3832 },
+  { name: "Mexico City", lat: 19.4326, lon: -99.1332 },
+
+  // 🇯🇵 Asie
   { name: "Tokyo", lat: 35.6762, lon: 139.6503 },
-  { name: "London", lat: 51.5074, lon: -0.1278 }
+  { name: "Osaka", lat: 34.6937, lon: 135.5023 },
+  { name: "Seoul", lat: 37.5665, lon: 126.9780 },
+  { name: "Beijing", lat: 39.9042, lon: 116.4074 },
+  { name: "Shanghai", lat: 31.2304, lon: 121.4737 },
+  { name: "Singapore", lat: 1.3521, lon: 103.8198 },
+
+  // 🇦🇪 Moyen-Orient
+  { name: "Dubai", lat: 25.2048, lon: 55.2708 },
+  { name: "Doha", lat: 25.2854, lon: 51.5310 },
+  { name: "Riyadh", lat: 24.7136, lon: 46.6753 },
+
+  // 🌎 Amérique du Sud
+  { name: "São Paulo", lat: -23.5505, lon: -46.6333 },
+  { name: "Buenos Aires", lat: -34.6037, lon: -58.3816 },
+  { name: "Santiago", lat: -33.4489, lon: -70.6693 },
+
+  // 🌍 Afrique
+  { name: "Cairo", lat: 30.0444, lon: 31.2357 },
+  { name: "Lagos", lat: 6.5244, lon: 3.3792 },
+  { name: "Johannesburg", lat: -26.2041, lon: 28.0473 },
+
+  // 🇦🇺 Océanie
+  { name: "Sydney", lat: -33.8688, lon: 151.2093 },
+  { name: "Melbourne", lat: -37.8136, lon: 144.9631 }
 ];
+
+const randomDayOfWeek = () => Math.floor(Math.random() * 7);
+const randomMonth = () => Math.floor(Math.random() * 12) + 1;
+const randomAge = () => Math.floor(Math.random() * 60) + 18;
+const randomHour = () => Math.floor(Math.random() * 24);
 
 export default function Dashboard() {
   const [isMounted, setIsMounted] = useState(false);
@@ -138,9 +186,10 @@ export default function Dashboard() {
       gender: Math.random() > 0.5 ? "M" : "F",
       lat: home.lat, long: home.lon, city_pop: 50000,
       merch_lat: merch.lat, merch_long: merch.lon,
-      age: 35, 
-      hour: isFraud ? [23, 0, 1, 2, 3, 4][Math.floor(Math.random() * 6)] : 14,
-      day_of_week: 2, month: 6,
+      age: randomAge(),
+      hour: randomHour(),
+    day_of_week: randomDayOfWeek(),
+    month: randomMonth(),
       homeName: home.name, merchName: merch.name
     };
   };
