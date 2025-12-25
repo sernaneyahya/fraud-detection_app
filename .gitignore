@@ -6,7 +6,6 @@ __pycache__/
 
 # ===== Data =====
 backend/data/*.csv
-backend/metrics/metrics.json
 # ===== Models =====
 # (on garde le .pkl volontairement)
 
