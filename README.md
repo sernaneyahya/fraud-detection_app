@@ -52,15 +52,6 @@ L'intelligence du système repose sur la création de variables stratégiques :
 
 ---
 
-## 👥 L'Équipe (Nexus Team)
-
-Ce projet a été réalisé en collaboration par :
-* **Yahya Sernane** : Data Engineering, Feature Engineering & Modélisation IA.
-* **Youssef Ketaj** : Architecture Backend, Logique Métier & Système d'Alerting.
-* **Amine Rizki** : UI/UX Design, Développement Frontend & Visualisation Temps Réel.
-
----
-
 ## 🏁 Installation & Lancement
 
 ### 1. Backend (FastAPI)
